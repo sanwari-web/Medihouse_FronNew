@@ -1,0 +1,178 @@
+<!-- Navbar-->
+<nav class="navbar navbar-expand-lg navbar-muted ">
+  <div name="navbar" class="container-fluid ">
+    <!-- Left elements -->
+    <div class="d-flex  align-items-sm-right">
+      <!-- Brand -->
+      <a class="navbar-brand me-2 mb-1 d-flex align-self-start" routerLink="/dashboard">
+        <img
+          src="assets/images/image 3.png"
+          height="40"
+          alt=""
+          loading="lazy"
+          style="margin-top: 2px;"
+        />
+      </a>
+
+      <!-- Search form -->
+      <form class="input-group w-auto my-auto d-none d-sm-flex justify-content-start">
+        <input
+          autocomplete="off"
+          type="search"
+          class="form-control rounded"
+          placeholder="Search"
+          style="min-width: 125px;"
+        />
+        <span class="input-group-text border-0 d-none d-lg-flex justify-content-start"
+          ><i class="fa fa-search"></i
+        ></span>
+      </form>
+    </div>
+    <!-- Left elements -->
+    <!-- Right elements -->
+    <ul class="navbar-nav flex-row">
+      <li class="nav-item me-3 me-lg-1 active">
+        <a class="nav-link" routerLink="/dashboard">
+          <span><i class="fa fa-home fa-lg"></i></span>
+          <span class="badge rounded-pill badge-notification bg-danger"></span>
+        </a>
+      </li>
+      <li class="nav-item me-3 me-lg-1">
+        <a class="nav-link d-sm-flex align-items-sm-left" href="#">
+          <img
+            src="assets/images/doctor.png"
+            class="rounded-circle"
+            height="30"
+            alt=""
+            loading="lazy"
+          />
+          <strong class="d-none d-sm-block ms-1" routerLink="/consultantprofile">Dr.{{userdata.first_name}} </strong>
+        </a>
+      </li>
+      <li class="nav-item me-3 me-lg-2">
+        <a class="nav-link"  routerLink="/consultantsession">
+          <span><i class="fa fa-plus-circle fa-lg"></i></span>
+        </a>
+      </li>
+    
+      <li class="nav-item px-4" ngbDropdown display="dynamic" placement="bottom-end">
+        <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdown3" role="button">
+          <i class="fa fa-chevron-circle-down fa-lg"></i>
+        </a>
+        <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
+          <a ngbDropdownItem routerLink="/consultantprofile" (click)="$event.preventDefault()">My Profile</a>
+          <a ngbDropdownItem routerLink="/settings" (click)="$event.preventDefault()">Settings</a>
+          <a ngbDropdownItem routerLink="/login" (click)="$event.preventDefault()">LogOut</a>
+        </div>
+      </li>
+        
+        </ul>
+    <!-- Right elements -->
+  </div>
+</nav>
+    <span><h2>Patient Personal Details </h2> </span>    
+<!-- Extended material form grid -->
+<form  id="addPatientModal" #addForm="ngForm" (ngFinish)="onAddPatient(addForm)" aria-labelledby="addPatientModalLabel" >
+  <!-- Grid row -->
+  <div class="form-row">
+    <!-- Grid column -->
+    <!-- Grid column -->
+    <!-- Grid column -->
+    <div class="col-md-6">
+      <!-- Material input -->
+      <div class="md-form form-group">
+        <input mdbInput type="text" ngModel="{{viewPatient?.first_name}}" ngModel name="firstname"  class="form-control" id="firstname" placeholder="First Name">
+        <label for="inputPassword4MD">First Name</label>
+        <input type="hidden" ngModel="{{viewPatient?.id}}" name="id" class="form-control" id="id" placeholder="Email">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="md-form form-group">
+        <!-- <input mdbInput type="nic" 
+        (ngModelChange)= "searchPatientByNIC(key.value)"
+        #key="ngModel"
+        ngModel name="key"
+        id="searchName" 
+        ngModel name="nic" class="form-control" click()= "fillValues()" id="nic" placeholder="NIC">
+        <label for="inputEmail4MD">NIC</label> -->
+      </div>
+    </div>
+    <div class="col-md-6">
+      <!-- Material input -->
+      <div class="md-form form-group">
+        <input mdbInput type="text" ngModel="{{viewPatient?.last_name}}" ngModel name="lastname" class="form-control" id="lastname" placeholder="Last Name">
+        <label for="inputPassword4MD">Last Name</label>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <!-- Material input -->
+      <div class="md-form form-group">
+        <input mdbInput type="email" ngModel name="email" ngModel="{{viewPatient?.email}}"class="form-control" id="email" placeholder="E-mail">
+        <label for="inputEmail4MD">E-mail</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+          <label for="dateofbirth">Date Of Birth</label>
+          <input  id="dob" ngModel name="dob" ngModel="{{viewPatient?.dob}}" type="date" name="dob" id="dateofbirth">
+        </div>
+    </div>
+    <!-- Grid column -->
+  </div>
+  <!-- Grid row -->
+
+  <!-- Grid row -->
+  <div class="row">
+    <!-- Grid column -->
+    <div class="col-md-12">
+      <!-- Material input -->
+      <div class="md-form form-group">
+        <input mdbInput type="text" ngModel name="city" ngModel="{{viewPatient?.city}}" class="form-control" id="City" placeholder="1234 Main St">
+        <label for="inputAddressMD">City</label>
+      </div>
+    </div>
+    <!-- Grid column -->
+
+    <!-- Grid column -->
+    <div class="col-md-12">
+      <!-- Material input -->
+      <div class="md-form form-group">
+        <input mdbInput type="text" ngModel name="district" ngModel="{{viewPatient?.district}}"  class="form-control" id="district" placeholder="Apartment, studio, or floor">
+        <label for="inputAddress2MD">District</label>
+      </div>
+    </div>
+    <!-- Grid column -->
+  </div>
+  <!-- Grid row -->
+
+  <!-- Grid row -->
+  <div class="form-row">
+    <!-- Grid column -->
+    <div class="col-md-6">
+      <!-- Material input -->
+      <div class="md-form form-group">
+        <input mdbInput type="text" ngModel name="gender" ngModel="{{viewPatient?.gender}}" class="form-control" id="gender" placeholder="City">
+        <label for="inputCityMD">Gender</label>
+      </div>
+    </div>
+    <!-- Grid column -->
+
+    <!-- Grid column -->
+    <div class="col-md-6">
+      <!-- Material input -->
+      <div class="md-form form-group">
+        <input mdbInput type="text" ngModel name="mobile" ngModel="{{viewPatient?.mobile}}"  class="form-control" id="mobile" >
+        <label for="inputZipMD">Mobile</label>
+      </div>
+    </div>
+    <!-- Grid column -->
+  </div>
+  <!-- Grid row -->
+</form>
+<button  (click)="onAddPatient(addForm)" data-dismiss="modal" class="btn btn-primary" type="button"  data-target="#navbarColor02" >
+  Save </button>
+  <button  routerLink="/sessiondetails" data-dismiss="modal" class="btn btn-primary" type="button"  data-target="#navbarColor02" >
+    next </button>
+  
+   

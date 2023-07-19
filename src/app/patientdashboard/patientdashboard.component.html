@@ -1,0 +1,281 @@
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Material Design Lite</title>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.cyan-light_blue.min.css">
+    <link rel="stylesheet" href="/src/styles.scss">
+
+  </head>
+  <body>
+<!-- Navbar-->
+<nav class="navbar navbar-expand-lg navbar-muted ">
+  <div name="navbar" class="container-fluid ">
+    <!-- Left elements -->
+    <div class="d-flex  align-items-sm-right">
+      <!-- Brand -->
+      <a class="navbar-brand me-2 mb-1 d-flex align-self-start" routerLink="/patientdashboard">
+        <img
+          src="assets/images/image3.png"
+          height="40"
+          alt=""
+          loading="lazy"
+          style="margin-top: 2px;"
+        />
+      </a>
+    </div>
+    <!-- Left elements -->
+    <!-- Right elements -->
+    <ul class="navbar-nav flex-row">
+      <li class="nav-item me-3 me-lg-1 active">
+        <a class="nav-link" routerLink="/patientdashboard">
+          <span><i class="fa fa-home fa-lg"></i></span>
+          <span class="badge rounded-pill badge-notification bg-danger"></span>
+        </a>
+      </li>
+      <li class="nav-item me-3 me-lg-1">
+        <a class="nav-link d-sm-flex align-items-sm-left">
+          <img
+            src="assets/images/patient4.jpg"
+            class="rounded-circle"
+            height="30"
+            alt=""
+            loading="lazy"
+          />
+          <strong class="d-none d-sm-block ms-1" routerLink="/patientprofile">{{userdata.first_name}}</strong>
+        </a>
+      </li>
+     <li class="nav-item px-4" ngbDropdown display="dynamic" placement="bottom-end">
+        <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdown3" role="button">
+          <i class="fa fa-chevron-circle-down fa-lg"></i>
+        </a>
+        <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
+          <a ngbDropdownItem routerLink="/patientprofile" (click)="$event.preventDefault()">My Profile</a>
+          <a ngbDropdownItem  (click)="logout()" >LogOut</a>
+        </div>
+      </li>
+        
+        </ul>
+    <!-- Right elements -->
+  </div>
+</nav>
+
+<ul class="nav flex-column">
+  <li class="nav-item">
+    <div class="d-flex align-items-center">
+      <div class="mr-2"></div>
+      <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#addAppointmentModal">
+        Create Appointment
+      </button>
+      <a class="nav-link active" routerLink="/patientappointment">
+        Click Here to View Your Appointments
+      </a>
+    </div>
+  </li>
+</ul>
+
+<!-- Navbar -->
+<div class="firmalar">    
+    <div class="container">
+      <div class="row"> <h2>Sessions Details : </h2> 
+        <div *ngFor="let session of session" class="col-md-6 col-xl-3">
+           <div class="card m-b-30">
+              <div class="card-body row">
+                 <div class="col-6 card-title align-self-center mb-0">
+                    <h3>Session ID : {{session?.session_id}}</h3>
+                    <p class="m-0"> Date :{{session?.date}}</p>
+                 </div>
+              </div>
+              <ul class="list-group list-group-flush">
+                 <li class="list-group-item"><i class="fa fa-ambulance float-right"></i>Diagnosis Type: {{session?.diagnosis}}</li>
+                 <li class="list-group-item"><i class="fa fa-ambulance float-right"></i>Diagnosis Reason: {{session?.reason}}</li>
+                 <li class="list-group-item"><i class="fa fa-ambulance float-right"></i>Medicines List From Clinic: {{session?.clinic_medicine}}</li>
+                 <li class="list-group-item"><i class="fa  float-right"></i>Medicines List From Pharmacy : {{session?.pharmacy_medicine}}</li>
+                 <!-- <li class="list-group-item"><i class="fa  float-right"></i>Total Payment for the session : {{session?.total_bill}}</li> -->
+                </ul>
+           </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="modal fade" id="addAppointmentModal" tabindex="-1" role="dialog" aria-labelledby="addAppointmentModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+           <div class="modal-header">
+              <h2 class="modal-title" id="addAppointmentModalLabel">Add New Appointment</h2>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+           </div>
+           <div class="alert alert-warning" role="alert">
+              All fields are mandatory!
+            </div>
+           <div class="modal-body">
+            <form
+            id="addAppointmentModal"
+            #addAppointmentForm="ngForm"
+            (ngSubmit)="onAddAppointment(addAppointmentForm)"
+          >
+            <div class="form-group">
+              <label for="firstname"
+                >First name : {{ viewPatient?.first_name }}
+                {{ viewPatient?.last_name }}</label
+              >
+              <input
+                type="hidden"
+                [(ngModel)]="viewPatient"
+                name="patient"
+                class="form-control"
+                id="patient"
+                placeholder="Email"
+              />
+            </div>
+            <div class="form-group">
+              <label for="email">Email: {{ viewPatient?.email }}</label>
+            </div>
+            <div class="form-group">
+              <label for="Consultant"
+                >Consultant <span style="color: red">*</span></label
+              >
+              <select
+                [(ngModel)]="selectedConsultantEmail"
+                name="user"
+                class="form-control"
+                id="user"
+                (change)="onConsultantChange()"
+                required
+              >
+                <option
+                  *ngFor="let consultant of consultants"
+                  [ngValue]="consultant"
+                >
+                  Dr.{{ consultant.first_name }} {{ consultant.last_name }}
+                </option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="SessionRoom">Session Room</label>
+              <input
+                type="text"
+                [value]="selectedConsultant?.sessionroom || ''"
+                name="sessionroom"
+                class="form-control"
+                id="sessionRoom"
+                readonly
+              />
+            </div>
+            <div class="form-group">
+              <label for="TimeSlot">Time Slot</label>
+              <input
+                type="text"
+                [value]="
+                  selectedConsultant
+                    ? selectedConsultant.appointmentstarttime +
+                      ' - ' +
+                      selectedConsultant.appointmentendttime
+                    : ''
+                "
+                name="appointmentstarttime"
+                class="form-control"
+                id="timeSlot"
+                readonly
+              />
+              
+            </div>
+            <div class="form-group">
+              <label for="date">Date<span style="color: red">*</span></label>
+              <br />
+              <input
+                id="date"
+                [(ngModel)]="selectedDate"
+                name="date"
+                type="date"
+                required
+                data-toggle="tooltip"
+                data-placement="top"
+                [min]="currentDate"
+                data-original-title="Select Date"
+                (change)="checkAvailability()"
+              />
+            </div>
+            <div class="form-group">
+              <label for="time">Time <span style="color: red">*</span></label>
+              <br />
+              <select
+                [(ngModel)]="selectedTimeSlot"
+                name="time"
+                class="form-control"
+                id="time"
+                required
+                (change)="checkAvailability()"
+              >
+                <option value="">Select Time Slot</option>
+                <option
+                  *ngFor="let slot of timeSlots"
+                  [value]="slot"
+                >
+                  {{ slot }}
+                </option>
+              </select>
+              <small class="form-text text-muted"
+                >Each appointment slot is 15 minutes from the selected
+                time.</small
+              >
+              <div *ngIf="!timeSlotAvailable" class="alert alert-danger">
+                Selected time slot to the date is not available. Please choose another date & 
+                time.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="message"
+                >Message <span style="color: red">*</span></label
+              >
+              <input
+                type="text"
+                ngModel
+                name="note"
+                class="form-control"
+                id="message"
+                placeholder="Your Message"
+                required
+              />
+            </div>
+
+            <div class="modal-footer">
+              <button
+                type="button"
+                id="add-user-form"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <!-- <input type="hidden" [(ngModel)]="editPatient" name="patient" class="form-control" id="patient" aria-describedby="emailHelp" placeholder="First Name">    -->
+              <button
+                (click)="onAddAppointment(addAppointmentForm)"
+                id="add-appointment-form"
+                data-dismiss="modal"
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="!addAppointmentForm.valid"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+           </div>
+        </div>
+      </div>
+      </div>

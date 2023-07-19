@@ -1,0 +1,908 @@
+<!-- Navbar-->
+<nav class="navbar navbar-expand-lg navbar-muted">
+  <div name="navbar" class="container-fluid">
+    <!-- Left elements -->
+    <div class="d-flex align-items-sm-right">
+      <!-- Brand -->
+      <a
+        class="navbar-brand me-2 mb-1 d-flex align-self-start"
+        routerLink="/dashboard"
+      >
+        <img
+          src="assets/images/image3.png"
+          height="40"
+          alt=""
+          loading="lazy"
+          style="margin-top: 2px"
+        />
+      </a>
+
+      <!-- Search form -->
+      <form
+        class="input-group w-auto my-auto d-none d-sm-flex justify-content-start"
+      >
+        <input
+          type="search"
+          (ngModelChange)="searchUser(key.value)"
+          #key="ngModel"
+          ngModel
+          name="key"
+          id="searchName"
+          class="form-control rounded"
+          placeholder="Search"
+          style="min-width: 125px"
+          required
+        />
+        <span
+          class="input-group-text border-0 d-none d-lg-flex justify-content-start"
+          ><i class="fa fa-search"></i
+        ></span>
+      </form>
+    </div>
+    <!-- Left elements -->
+    <!-- Right elements -->
+    <ul class="navbar-nav flex-row">
+      <li class="nav-item me-3 me-lg-1 active">
+        <a class="nav-link" routerLink="/dashboard">
+          <span><i class="fa fa-home fa-lg"></i></span>
+          <span class="badge rounded-pill badge-notification bg-danger"></span>
+        </a>
+      </li>
+      <li class="nav-item me-3 me-lg-1">
+        <a class="nav-link d-sm-flex align-items-sm-left">
+          <img
+            src="assets/images/doctor.png"
+            class="rounded-circle"
+            height="30"
+            alt=""
+            loading="lazy"
+          />
+        </a>
+      </li>
+      <li
+        class="nav-item px-4"
+        ngbDropdown
+        display="dynamic"
+        placement="bottom-end"
+      >
+        <a
+          class="nav-link"
+          tabindex="0"
+          ngbDropdownToggle
+          id="navbarDropdown3"
+          role="button"
+        >
+          <i class="fa fa-chevron-circle-down fa-lg"></i>
+        </a>
+        <div
+          ngbDropdownMenu
+          aria-labelledby="navbarDropdown3"
+          class="dropdown-menu"
+        >
+          <a
+            ngbDropdownItem
+            routerLink="/consultantprofile"
+            (click)="$event.preventDefault()"
+            >My Profile</a
+          >
+          <a ngbDropdownItem (click)="logout()">LogOut</a>
+        </div>
+      </li>
+    </ul>
+    <!-- Right elements -->
+  </div>
+</nav>
+<body>
+  <div class="container" id="main-container">
+    <div class="row">
+      <button
+        class="btn btn-secondary pull-right"
+        (click)="onOpenModal(null, 'add')"
+      >
+        Create Session With New Patient <span class="sr-only">(current)</span>
+      </button>
+    </div>
+    <br />
+    <div class="row">
+      <div *ngFor="let user of user" class="col-md-6 col-xl-3">
+        <div class="card m-b-30">
+          <div class="card-body row">
+            <div class="col-6">
+              <a href=""
+                ><img
+                  src="assets/images/patient4.jpg"
+                  alt=""
+                  class="img-fluid rounded-circle w-60"
+              /></a>
+            </div>
+            <div class="col-6 card-title align-self-center mb-0">
+              <h3>{{ user?.first_name }}</h3>
+              <p class="m-0">{{ user?.last_name }}</p>
+            </div>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <i class="fa fa-envelope float-right"></i>{{ user?.email }}
+            </li>
+            <li class="list-group-item">
+              <i class="fa fa-phone float-right"></i>Phone : {{ user?.mobile }}
+            </li>
+            <!-- <li class="list-group-item"><a (click)="onOpenModal(editPatient, 'viewSessions')" id ="viewSessions" class="btn btn-outline-dark tooltips" data-placement="top" data-original-title="viewSessions"><div>View Patient History
+               <input type="hidden"  ngModel="{{editPatient?.id}}" name="id" class="form-control" id="id" placeholder="Email">
+               <input type="hidden"  ngModel="{{editPatient?.first_name}}" name="first_name" class="form-control" id="first_name" placeholder="Email">
+               <input type="hidden"  ngModel="{{editPatient?.last_name}}" name="last_name" class="form-control" id="last_name" placeholder="Email">
+               <input type="hidden"  ngModel="{{editPatient?.email}}" name="email" class="form-control" id="email" placeholder="Email">
+               <input type="hidden"  ngModel="{{editPatient?.dob}}" name="dob" class="form-control" id="dob" placeholder="Email">
+               <input type="hidden"  ngModel="{{editPatient?.city}}" name="city" class="form-control" id="city" placeholder="Email">
+               <input type="hidden"  ngModel="{{editPatient?.district}}" name="district" class="form-control" id="district" placeholder="Email">
+               <input type="hidden"  ngModel="{{editPatient?.mobile}}" name="mobile" class="form-control" id="mobile" placeholder="Email">
+               <input type="hidden"  ngModel="{{editPatient?.nic}}" name="nic" class="form-control" id="nic" placeholder="Email">
+            </div></a></li> -->
+          </ul>
+          <div class="card-body">
+            <div class="float-right btn-group btn-group-sm">
+              <a
+                (click)="onOpenModal(user, 'createappointment')"
+                id="createappointment"
+                class="btn btn-primary tooltips"
+                data-placement="top"
+                data-original-title="createappointment"
+                ><div>Create Appointment</div>
+                <i class="fa fa-plus-circle fa-lg"></i
+              ></a>
+              <a
+                (click)="onOpenModal(editPatient, 'createsession')"
+                id="createsession"
+                class="btn btn-secondary tooltips"
+                data-placement="top"
+                data-original-title="createsession"
+                ><div>
+                  New Session
+                  <input
+                    type="hidden"
+                    ngModel="{{ editPatient?.id }}"
+                    name="id"
+                    class="form-control"
+                    id="id"
+                    placeholder="Email"
+                  />
+                  <input
+                    type="hidden"
+                    ngModel="{{ editPatient?.first_name }}"
+                    name="first_name"
+                    class="form-control"
+                    id="first_name"
+                    placeholder="Email"
+                  />
+                  <input
+                    type="hidden"
+                    ngModel="{{ editPatient?.last_name }}"
+                    name="last_name"
+                    class="form-control"
+                    id="last_name"
+                    placeholder="Email"
+                  />
+                  <input
+                    type="hidden"
+                    ngModel="{{ editPatient?.email }}"
+                    name="email"
+                    class="form-control"
+                    id="email"
+                    placeholder="Email"
+                  />
+                  <input
+                    type="hidden"
+                    ngModel="{{ editPatient?.dob }}"
+                    name="dob"
+                    class="form-control"
+                    id="dob"
+                    placeholder="Email"
+                  />
+                  <input
+                    type="hidden"
+                    ngModel="{{ editPatient?.city }}"
+                    name="city"
+                    class="form-control"
+                    id="city"
+                    placeholder="Email"
+                  />
+                  <input
+                    type="hidden"
+                    ngModel="{{ editPatient?.district }}"
+                    name="district"
+                    class="form-control"
+                    id="district"
+                    placeholder="Email"
+                  />
+                  <input
+                    type="hidden"
+                    ngModel="{{ editPatient?.mobile }}"
+                    name="mobile"
+                    class="form-control"
+                    id="mobile"
+                    placeholder="Email"
+                  />
+                  <input
+                    type="hidden"
+                    ngModel="{{ editPatient?.nic }}"
+                    name="nic"
+                    class="form-control"
+                    id="nic"
+                    placeholder="Email"
+                  />
+                  <input
+                    type="hidden"
+                    ngModel="{{ editPatient?.password }}"
+                    name="mobile"
+                    class="form-control"
+                    id="mobile"
+                    placeholder="Email"
+                  />
+                  <input
+                    type="hidden"
+                    ngModel="{{ editPatient?.role }}"
+                    name="nic"
+                    class="form-control"
+                    id="nic"
+                    placeholder="Email"
+                  />
+                </div>
+                <i class="fa fa-plus-circle fa-lg"></i
+              ></a>
+              <a
+                (click)="onOpenModal(user, 'edit')"
+                class="btn btn-primary tooltips"
+                data-placement="top"
+                data-original-title="Edit"
+                ><i class="fa fa-pencil"></i>
+              </a>
+              <a
+                (click)="onOpenModal(user, 'delete')"
+                class="btn btn-secondary tooltips"
+                data-placement="top"
+                data-original-title="Delete"
+                ><i class="fa fa-times"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="addEmployeeModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="addEmployeeModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title" id="addEmployeeModalLabel">Add Patient</h2>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="alert alert-warning" role="alert">
+            All fields are mandatory!
+          </div>
+          <div class="modal-body">
+            <form
+              id="addPatientModal"
+              #addForm="ngForm"
+              (ngSubmit)="onAddPatient(addForm)"
+            >
+              <div class="form-group">
+                <label for="name">First Name</label>
+                <input
+                  type="text"
+                  ngModel
+                  name="first_name"
+                  class="form-control"
+                  id="first_name"
+                  placeholder="First Name"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="name">Last Name</label>
+                <input
+                  type="name"
+                  ngModel
+                  name="last_name"
+                  class="form-control"
+                  id="last_name"
+                  placeholder="Last Name"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="email"> Email </label>
+                <input
+                  type="email"
+                  ngModel
+                  name="email"
+                  [(ngModel)]="email"
+                  class="form-control"
+                  (ngModelChange)="ValidateEmail()"
+                  id="email"
+                  placeholder="Email"
+                  required
+                />
+                <span *ngIf="validateemailformat" class="text-danger"
+                  ><b>Invalid email address!</b></span
+                >
+              </div>
+              <div class="form-group">
+                <label for="nic">NIC <span style="color: red">*</span></label>
+                <input type="text" [(ngModel)]="nic" name="nic" class="form-control" id="nic" placeholder="NIC" required pattern="^[0-9]{9}[vV]$">
+                <div *ngIf="!validateNic()" class="text-danger">
+                 The NIC should be 9 numbers followed by the letter 'V'.
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="dateofbirth">Date of Birth</label>
+                <br />
+                <input
+                  id="dob"
+                  [(ngModel)]="dob"
+                  name="dob"
+                  type="date"
+                  id="dateofbirth"
+                  [max]="getCurrentDate()"
+                />
+              </div>
+              <div class="form-group">
+                <label for="nic">District</label>
+                <select
+                  type="text"
+                  ngModel
+                  name="district"
+                  class="form-control"
+                  id="district"
+                >
+                  <option>Colombo</option>
+                  <option>Gampaha</option>
+                  <option>Kalutara</option>
+                  <option>Kandy</option>
+                  <option>Matale</option>
+                  <option>Nuwara Eliya</option>
+                  <option>Galle</option>
+                  <option>Matara</option>
+                  <option>Hambantota</option>
+                  <option>Jaffna</option>
+                  <option>Kilinochchi</option>
+                  <option>Mannar</option>
+                  <option>Vavuniya</option>
+                  <option>Mullaitivu</option>
+                  <option>Batticaloa</option>
+                  <option>Ampara</option>
+                  <option>Trincomalee</option>
+                  <option>Kurunegala</option>
+                  <option>Puttalam</option>
+                  <option>Anuradhapura</option>
+                  <option>Polonnaruwa</option>
+                  <option>Badulla</option>
+                  <option>Moneragala</option>
+                  <option>Ratnapura</option>
+                  <option>Kegalle</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="role"> City</label>
+                <input
+                  type="text"
+                  ngModel
+                  name="city"
+                  class="form-control"
+                  id="city"
+                  placeholder="City"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="gender">Gender</label>
+                <select
+                  type="text"
+                  ngModel
+                  name="gender"
+                  class="form-control"
+                  id="gender"
+                >
+                  <option>Female</option>
+                  <option>Male</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="sessionCount">Mobile No:</label>
+                <input
+                  type="text"
+                  ngModel
+                  name="mobile"
+                  class="form-control"
+                  id="mobile"
+                  placeholder="Mobile No"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="role"> Password</label>
+                <input
+                  type="text"
+                  ngModel
+                  name="password"
+                  class="form-control"
+                  id="password"
+                  placeholder="Password"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="role">User Type</label>
+                <select
+                  type="text"
+                  ngModel
+                  name="role"
+                  class="form-control"
+                  id="role"
+                >
+                  <option>Patient</option>
+                </select>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  id="add-user-form"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  (click)="onAddPatient(addForm)"
+                  [disabled]="addForm.invalid"
+                  id="add-user-form"
+                  data-dismiss="modal"
+                  type="submit"
+                  class="btn btn-primary"
+                >
+                  Start Session
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div
+      class="modal fade"
+      id="updateEmployeeModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="employeeEditModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updateEmployeeModalLabel">
+              Edit Patient {{ editPatient?.first_name }}
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form #editForm="ngForm">
+              <div class="form-group">
+                <label for="firstname">First name</label>
+                <input
+                  type="text"
+                  ngModel="{{ editPatient?.first_name }}"
+                  name="first_name"
+                  class="form-control"
+                  id="first_name"
+                  aria-describedby="emailHelp"
+                  placeholder="First Name"
+                />
+              </div>
+              <input
+                type="hidden"
+                ngModel="{{ editPatient?.id }}"
+                name="id"
+                class="form-control"
+                id="id"
+                placeholder="Email"
+              />
+              <input
+                type="hidden"
+                ngModel="{{ editPatient?.password }}"
+                name="password"
+                class="form-control"
+                id="password"
+                placeholder="Email"
+              />
+              <input
+                type="hidden"
+                ngModel="{{ editPatient?.role }}"
+                name="role"
+                class="form-control"
+                id="role"
+                placeholder="Email"
+              />
+
+              <div class="form-group">
+                <label for="lastname">Last name</label>
+                <input
+                  type="text"
+                  ngModel="{{ editPatient?.last_name }}"
+                  name="last_name"
+                  class="form-control"
+                  id="last_name"
+                  aria-describedby="emailHelp"
+                  placeholder="Last Name"
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  ngModel="{{ editPatient?.email }}"
+                  name="email"
+                  class="form-control"
+                  id="email"
+                  placeholder="Email"
+                />
+              </div>
+              <div class="form-group">
+                <label for="nic">NIC</label>
+                <input
+                  type="text"
+                  ngModel="{{ editPatient?.nic }}"
+                  name="nic"
+                  class="form-control"
+                  id="nic"
+                  placeholder="NIC"
+                />
+              </div>
+              <div class="form-group">
+                <label for="gender">Gender</label>
+                <input
+                  type="text"
+                  ngModel="{{ editPatient?.gender }}"
+                  name="gender"
+                  class="form-control"
+                  id="gender"
+                  name="gender"
+                  placeholder="Gender"
+                />
+              </div>
+              <div class="form-group">
+                <label for="city">City</label>
+                <input
+                  type="text"
+                  ngModel="{{ editPatient?.city }}"
+                  name="city"
+                  class="form-control"
+                  id="city"
+                  placeholder="City"
+                />
+              </div>
+              <div class="form-group">
+                <label for="district">District</label>
+                <select
+                  type="text"
+                  ngModel="{{ editPatient?.district }}"
+                  name="district"
+                  class="form-control"
+                  id="district"
+                >
+                  <option>Colombo</option>
+                  <option>Gampaha</option>
+                  <option>Kalutara</option>
+                  <option>Kandy</option>
+                  <option>Matale</option>
+                  <option>Nuwara Eliya</option>
+                  <option>Galle</option>
+                  <option>Matara</option>
+                  <option>Hambantota</option>
+                  <option>Jaffna</option>
+                  <option>Kilinochchi</option>
+                  <option>Mannar</option>
+                  <option>Vavuniya</option>
+                  <option>Mullaitivu</option>
+                  <option>Batticaloa</option>
+                  <option>Ampara</option>
+                  <option>Trincomalee</option>
+                  <option>Kurunegala</option>
+                  <option>Puttalam</option>
+                  <option>Anuradhapura</option>
+                  <option>Polonnaruwa</option>
+                  <option>Badulla</option>
+                  <option>Moneragala</option>
+                  <option>Ratnapura</option>
+                  <option>Kegalle</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="mobile">Mobile</label>
+                <input
+                  type="text"
+                  ngModel="{{ editPatient?.mobile }}"
+                  name="mobile"
+                  class="form-control"
+                  id="mobile"
+                  placeholder="Mobile"
+                />
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  id=""
+                  data-dismiss="modal"
+                  class="btn btn-secondary"
+                >
+                  Close
+                </button>
+                <button
+                  (click)="onUpdatePatient(editForm.value)"
+                  data-dismiss="modal"
+                  class="btn btn-primary"
+                >
+                  Save changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div
+      class="modal fade"
+      id="deleteEmployeeModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="deleteModelLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModelLabel">Delete Patient</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>
+              Are you sure you want to delete user
+              {{ deletePatient?.first_name }}?
+            </p>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                No
+              </button>
+              <button
+                (click)="onDeletePatient(deletePatient?.id)"
+                class="btn btn-danger"
+                data-dismiss="modal"
+              >
+                Yes
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="addAppointmentModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="addAppointmentModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title" id="addAppointmentModalLabel">
+              Add New Appointment
+            </h2>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="alert alert-warning" role="alert">
+            All fields are mandatory!
+          </div>
+          <div class="modal-body">
+            <form
+              id="addAppointmentModal"
+              #addAppointmentForm="ngForm"
+              (ngSubmit)="onAddAppointment(addAppointmentForm)"
+            >
+              <div class="form-group">
+                <label for="firstname"
+                  >First name : {{ viewPatient?.first_name }}
+                  {{ viewPatient?.last_name }}</label
+                >
+                <input
+                  type="hidden"
+                  [(ngModel)]="viewPatient"
+                  name="patient"
+                  class="form-control"
+                  id="patient"
+                  placeholder="Email"
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Email: {{ viewPatient?.email }}</label>
+              </div>
+              <div class="form-group">
+                <label for="Consultant"
+                  >Consultant <span style="color: red">*</span></label
+                >
+                <select
+                  [(ngModel)]="selectedConsultantEmail"
+                  name="user"
+                  class="form-control"
+                  id="user"
+                  (change)="onConsultantChange()"
+                  required
+                >
+                  <option
+                    *ngFor="let consultant of consultants"
+                    [ngValue]="consultant"
+                  >
+                    Dr.{{ consultant.first_name }} {{ consultant.last_name }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="SessionRoom">Session Room</label>
+                <input
+                  type="text"
+                  [value]="selectedConsultant?.sessionroom || ''"
+                  name="sessionroom"
+                  class="form-control"
+                  id="sessionRoom"
+                  readonly
+                />
+              </div>
+              <div class="form-group">
+                <label for="TimeSlot">Time Slot</label>
+                <input
+                  type="text"
+                  [value]="
+                    selectedConsultant
+                      ? selectedConsultant.appointmentstarttime +
+                        ' - ' +
+                        selectedConsultant.appointmentendttime
+                      : ''
+                  "
+                  name="appointmentstarttime"
+                  class="form-control"
+                  id="timeSlot"
+                  readonly
+                />
+                
+              </div>
+              <div class="form-group">
+                <label for="date">Date<span style="color: red">*</span></label>
+                <br />
+                <input
+                  id="date"
+                  [(ngModel)]="selectedDate"
+                  name="date"
+                  type="date"
+                  required
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  [min]="currentDate"
+                  data-original-title="Select Date"
+                  (change)="checkAvailability()"
+                />
+              </div>
+              <div class="form-group">
+                <label for="time">Time <span style="color: red">*</span></label>
+                <br />
+                <select
+                  [(ngModel)]="selectedTimeSlot"
+                  name="time"
+                  class="form-control"
+                  id="time"
+                  required
+                  (change)="checkAvailability()"
+                >
+                  <option value="">Select Time Slot</option>
+                  <option
+                    *ngFor="let slot of timeSlots"
+                    [value]="slot"
+                  >
+                    {{ slot }}
+                  </option>
+                </select>
+                <small class="form-text text-muted"
+                  >Each appointment slot is 15 minutes from the selected
+                  time.</small
+                >
+                <div *ngIf="!timeSlotAvailable" class="alert alert-danger">
+                  Selected time slot to the date is not available. Please choose another date & 
+                  time.
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="message"
+                  >Message <span style="color: red">*</span></label
+                >
+                <input
+                  type="text"
+                  ngModel
+                  name="note"
+                  class="form-control"
+                  id="message"
+                  placeholder="Your Message"
+                  required
+                />
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  id="add-user-form"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <!-- <input type="hidden" [(ngModel)]="editPatient" name="patient" class="form-control" id="patient" aria-describedby="emailHelp" placeholder="First Name">    -->
+                <button
+                  (click)="onAddAppointment(addAppointmentForm)"
+                  id="add-appointment-form"
+                  data-dismiss="modal"
+                  type="submit"
+                  class="btn btn-primary"
+                  [disabled]="!addAppointmentForm.valid"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

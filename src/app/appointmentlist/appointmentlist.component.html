@@ -1,0 +1,354 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="description"
+      content="A front-end template that helps you build fast, modern mobile web apps."
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
+    />
+    <title>Material Design Lite</title>
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="Material Design Lite" />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&lang=en"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.getmdl.io/1.3.0/material.cyan-light_blue.min.css"
+    />
+    <link rel="stylesheet" href="/src/styles.scss" />
+  </head>
+  <body>
+    <!-- Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-muted">
+      <div name="navbar" class="container-fluid">
+        <!-- Left elements -->
+        <div class="d-flex align-items-sm-right">
+          <!-- Brand -->
+          <a
+            class="navbar-brand me-2 mb-1 d-flex align-self-start"
+            routerLink="/dashboard"
+          >
+            <img
+              src="assets/images/image3.png"
+              height="40"
+              alt=""
+              loading="lazy"
+              style="margin-top: 2px"
+            />
+          </a>
+        </div>
+        <!-- Right elements -->
+        <ul class="navbar-nav flex-row">
+          <li class="nav-item me-3 me-lg-1 active">
+            <a class="nav-link" routerLink="/dashboard">
+              <span><i class="fa fa-home fa-lg"></i></span>
+              <span
+                class="badge rounded-pill badge-notification bg-danger"
+              ></span>
+            </a>
+          </li>
+          <li class="nav-item me-3 me-lg-1">
+            <a class="nav-link d-sm-flex align-items-sm-left">
+              <img
+                src="assets/images/doctor.png"
+                class="rounded-circle"
+                height="30"
+                alt=""
+                loading="lazy"
+              />
+              <strong
+                class="d-none d-sm-block ms-1"
+                routerLink="/consultantprofile"
+                >Dr.{{ userdata.first_name }}</strong
+              >
+            </a>
+          </li>
+
+          <li
+            class="nav-item px-4"
+            ngbDropdown
+            display="dynamic"
+            placement="bottom-end"
+          >
+            <a
+              class="nav-link"
+              tabindex="0"
+              ngbDropdownToggle
+              id="navbarDropdown3"
+              role="button"
+            >
+              <i class="fa fa-chevron-circle-down fa-lg"></i>
+            </a>
+            <div
+              ngbDropdownMenu
+              aria-labelledby="navbarDropdown3"
+              class="dropdown-menu"
+            >
+              <a
+                ngbDropdownItem
+                routerLink="/consultantprofile"
+                (click)="$event.preventDefault()"
+                >My Profile</a
+              >
+              <a ngbDropdownItem (click)="logout()">LogOut</a>
+            </div>
+          </li>
+        </ul>
+        <!-- Right elements -->
+      </div>
+    </nav>
+    <!-- Navbar -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+      integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk="
+      crossorigin="anonymous"
+    />
+
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h3>Scheduled Appoinment List</h3>
+            </div>
+            <div class="card-body">
+              <div class="form-row border-bottom p-1 position-relative">
+                <label class="text-inverse font-12"
+                  >Select Date to Filter Appointment:
+                </label>
+                <div class="input-group date">
+                  <input
+                    type="date"
+                    (ngModelChange)="searchAppointmentByDate(key.value)"
+                    #key="ngModel"
+                    ngModel
+                    name="key"
+                    id="searchName"
+                    class="font-4 form-control"
+                    id="dp"
+                    placeholder="Select the Appointment Date"
+                    [min]="currentDate"
+                    short
+                  />
+                  <label for="dp"><i class="icon-calendar mt-1"></i></label>
+                  <span
+                    class="input-group-text border-0 d-none d-lg-flex justify-content-start"
+                  >
+                    <i class="fa fa-search"></i>
+                  </span>
+                </div>
+              </div>
+
+              <div class="bdc" style="position: relative"></div>
+              <br />
+              <form
+                class="input-group w-auto my-auto d-none d-sm-flex justify-content-start"
+              >
+                <input
+                  type="search"
+                  (ngModelChange)="searchAppointment(key1.value)"
+                  #key1="ngModel"
+                  ngModel
+                  name="key1"
+                  id="searchName"
+                  class="form-control rounded"
+                  placeholder="Filter Appoinments by Consultant Name or Patient Name"
+                  style="min-width: 125px"
+                  required
+                />
+                <span
+                  class="input-group-text border-0 d-none d-lg-flex justify-content-start"
+                >
+                  <i class="fa fa-search"></i>
+                </span>
+              </form>
+              <br />
+              <div
+                class="table-responsive"
+                id="proTeamScroll"
+                tabindex="2"
+                style="height: 400px; overflow: hidden; outline: none"
+              >
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Appointment No</th>
+                      <th>Patient Name</th>
+                      <th>Consultant Name</th>
+                      <th>Appoinment Date</th>
+                      <th>Appoinment Time</th>
+                      <th>Note</th>
+                      <th>Edit</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let appointmentdata of appointmentdata">
+                      <td>{{ appointmentdata.id }}</td>
+                      <td>
+                        {{ appointmentdata.patient.first_name }}
+                        {{ appointmentdata.patient.last_name }}
+                      </td>
+
+                      <td>
+                        Dr. {{ appointmentdata.user.first_name }}
+                        {{ appointmentdata.user.last_name }}
+                      </td>
+                      <td>
+                        {{ appointmentdata.date }}
+                      </td>
+                      <td>
+                        {{ appointmentdata.time }}
+                      </td>
+                      <td>
+                        {{ appointmentdata.note }}
+                      </td>
+                      <td>
+                        <button (click)="openEditModal(appointmentdata)" data-toggle="modal" data-target="#editAppointmentModal">
+                          <i class="fas fa-pencil-alt"></i>
+                        </button>
+                        <button
+                          data-toggle="modal"
+                          data-target="#deleteAppointmentModal"
+                          (click)="DeleteAppointment(appointmentdata.id)"
+                        >
+                          <i class="far fa-trash-alt"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div
+                  class="modal fade"
+                  id="editAppointmentModal"
+                  tabindex="-1"
+                  role="dialog"
+                  aria-labelledby="editAppointmentModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h2 class="modal-title" id="editAppointmentModalLabel">
+                          Update Appointment
+                        </h2>
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="alert alert-warning" role="alert">
+                        All fields are mandatory!
+                      </div>
+                            <div class="modal-body">
+                              <form id="editAppointmentModal" (ngSubmit)="updateAppointment(selectedAppointment)">
+                                <div class="form-group">
+                                  <label for="date">Date<span style="color: red">*</span></label>
+                                  <br />
+                                  <input ngModel="{{appointmentdata?.date}}" name="date" type="date" id="date" required />
+                                </div>
+                                <div class="form-group">
+                                  <label for="time">Time <span style="color: red">*</span></label>
+                                  <br />
+                                  <input ngModel="{{appointmentdata?.time}}" name="time" type="time" id="time" required />
+                                </div>
+                                <div class="form-group">
+                                  <label for="note">Note <span style="color: red">*</span></label>
+                                  <input ngModel="{{appointmentdata?.note}}"  name="note" class="form-control" id="note" placeholder="Your Note" required />
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                              </form>
+                            </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Delete Appointment Modal -->
+                <!-- Add this HTML code inside your component's template -->
+                <div id="confirmModal" class="modal">
+                  <div class="modal-content">
+                    <p>Are you sure you want to delete this appointment?</p>
+                    <div class="modal-buttons">
+                      <button id="confirmBtn">Confirm</button>
+                      <button id="cancelBtn">Cancel</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="modal fade"
+                  id="deleteEmployeeModal"
+                  tabindex="-1"
+                  role="dialog"
+                  aria-labelledby="deleteModelLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModelLabel">
+                          Delete Patient
+                        </h5>
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <p>
+                          Are you sure you want to delete user
+                          {{ appointmentdata?.id }}?
+                        </p>
+                        <div class="modal-footer">
+                          <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                          >
+                            No
+                          </button>
+                          <button
+                            (click)="DeleteAppointment(appointmentdata?.id)"
+                            class="btn btn-danger"
+                            data-dismiss="modal"
+                          >
+                            Yes
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

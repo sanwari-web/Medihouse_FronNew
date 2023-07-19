@@ -1,0 +1,181 @@
+
+
+<html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+      <title>Material Design Lite</title>
+      <meta name="mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black">
+      <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&lang=en">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+      <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.cyan-light_blue.min.css">
+      <link rel="stylesheet" href="/src/styles.scss">
+  
+    </head>
+    <body>
+  <!-- Navbar-->
+  <nav class="navbar navbar-expand-lg navbar-muted ">
+    <div name="navbar" class="container-fluid ">
+      <!-- Left elements -->
+      <div class="d-flex  align-items-sm-right">
+        <!-- Brand -->
+        <a class="navbar-brand me-2 mb-1 d-flex align-self-start" routerLink="/dashboard">
+          <img
+            src="assets/images/image3.png"
+            height="40"
+            alt=""
+            loading="lazy"
+            style="margin-top: 2px;"
+          />
+        </a>
+  
+        <!-- Search form -->
+        <form class="input-group w-auto my-auto d-none d-sm-flex justify-content-start">
+          <input
+          type="search"
+          (ngModelChange)="searchSession2(key.value)"
+          #key="ngModel"
+          ngModel name="key"
+          id="searchName"
+          class="form-control rounded"
+          placeholder="Search by diagnosis..."
+          style="min-width: 125px;"
+          required
+          />
+          <span class="input-group-text border-0 d-none d-lg-flex justify-content-start"
+            ><i class="fa fa-search"></i
+          ></span>
+        </form>
+      </div>
+      <!-- Left elements -->
+      <!-- Right elements -->
+      <ul class="navbar-nav flex-row">
+        <li class="nav-item me-3 me-lg-1 active">
+          <a class="nav-link" routerLink="/dashboard">
+            <span><i class="fa fa-home fa-lg"></i></span>
+            <span class="badge rounded-pill badge-notification bg-danger"></span>
+          </a>
+        </li>
+        <li class="nav-item me-3 me-lg-1">
+          <a class="nav-link d-sm-flex align-items-sm-left">
+            <img
+              src="assets/images/doctor.png"
+              class="rounded-circle"
+              height="30"
+              alt=""
+              loading="lazy"
+            />
+            <strong class="d-none d-sm-block ms-1" routerLink="/consultantprofile">Dr.{{userdata.first_name}}</strong>
+          </a>
+        </li>
+        <!-- <li class="nav-item me-3 me-lg-2">
+          <a class="nav-link"  routerLink="/patienthistory">
+            <span><i class="fa fa-plus-circle fa-lg"></i></span>
+          </a>
+        </li> -->
+      
+        <li class="nav-item px-4" ngbDropdown display="dynamic" placement="bottom-end">
+          <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdown3" role="button">
+            <i class="fa fa-chevron-circle-down fa-lg"></i>
+          </a>
+          <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
+            <a ngbDropdownItem routerLink="/consultantprofile" (click)="$event.preventDefault()">My Profile</a>
+           <a ngbDropdownItem  (click)="logout()" >LogOut</a>
+          </div>
+        </li>
+          
+          </ul>
+      <!-- Right elements -->
+    </div>
+  </nav>
+  <div class="container">
+    <div class="card-body">
+      <div class="form-row border-bottom p-1 position-relative">
+        <label class="text-inverse font-12">Select Date to Filter Appointment:</label>
+        <div class="input-group date">
+          <input
+            type="date"
+            #key="ngModel"
+            ngModel
+            name="key"
+            id="searchDate"
+            class="font-4 form-control"
+            placeholder="Select the Session Date"
+            short
+            (input)="filterTable()"
+          />
+          <label for="searchDate"><i class="icon-calendar mt-1"></i></label>
+          <span
+            class="input-group-text border-0 d-none d-lg-flex justify-content-start"
+          >
+            <i class="fa fa-search"></i>
+          </span>
+        </div>
+      </div>
+  
+      <div class="bdc" style="position: relative"></div>
+      <br />
+      <form
+        class="input-group w-auto my-auto d-none d-sm-flex justify-content-start"
+      >
+        <input
+          type="search"
+          #key1="ngModel"
+          ngModel
+          name="key1"
+          id="searchName"
+          class="form-control rounded"
+          placeholder="Filter Sessions by Consultant Name or Patient Name"
+          style="min-width: 125px"
+          required
+          (input)="filterTable()"
+        />
+        <span
+          class="input-group-text border-0 d-none d-lg-flex justify-content-start"
+        >
+          <i class="fa fa-search"></i>
+        </span>
+      </form>
+      <br />
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body text-center">
+              <h2 class="card-title m-b-0">All Consultation Sessions</h2>
+            </div>
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Session Id</th>
+                    <th scope="col">Consultant Name</th>
+                    <th scope="col">Patient Name</th>
+                    <th scope="col">Diagnosis Type</th>
+                    <th scope="col">Reason</th>
+                    <th scope="col">Date</th>
+                  </tr>
+                </thead>
+                <tbody class="customtable">
+                  <tr *ngFor="let sessiondata of filteredSessionData">
+                    <td>{{ sessiondata.session_id }}</td>
+                    <td>Dr. {{ sessiondata.user.first_name }} {{ sessiondata.user.last_name }}</td>
+                    <td>{{ sessiondata.patient.first_name }} {{ sessiondata.patient.last_name }}</td>
+                    <td>{{ sessiondata.diagnosis }}</td>
+                    <td>{{ sessiondata.reason }}</td>
+                    <td>{{ sessiondata.date }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,130 @@
+<!-- Navbar-->
+<nav class="navbar navbar-expand-lg navbar-muted ">
+    <div name="navbar" class="container-fluid ">
+      <!-- Left elements -->
+      <div class="d-flex  align-items-sm-right">
+        <!-- Brand -->
+        <a class="navbar-brand me-2 mb-1 d-flex align-self-start" routerLink="/dashboard">
+          <img
+            src="assets/images/image3.png"
+            height="40"
+            alt=""
+            loading="lazy"
+            style="margin-top: 2px;"
+          />
+        </a>
+
+      </div>
+      <!-- Left elements -->
+      <!-- Right elements -->
+      <ul class="navbar-nav flex-row">
+        
+        <li class="nav-item me-3 me-lg-1 active">
+
+          <a class="nav-link" routerLink="/dashboard">
+            <span><i class="fa fa-home fa-lg"></i></span>
+            <span class="badge rounded-pill badge-notification bg-danger"></span>
+          </a>
+        </li>
+        <li class="nav-item me-3 me-lg-1">
+          <a class="nav-link d-sm-flex align-items-sm-left">
+            <img
+              src="assets/images/doctor.png"
+              class="rounded-circle"
+              height="30"
+              alt=""
+              loading="lazy"
+            />
+            <strong class="d-none d-sm-block ms-1" routerLink="/consultantprofile"></strong>Dr.{{userdata.first_name}} 
+          </a>
+        </li>
+     
+      
+        <li class="nav-item px-4" ngbDropdown display="dynamic" placement="bottom-end">
+          <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdown3" role="button">
+            <i class="fa fa-chevron-circle-down fa-lg"></i>
+          </a>
+          <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
+            <a ngbDropdownItem routerLink="/consultantprofile" (click)="$event.preventDefault()">My Profile</a>
+            <a ngbDropdownItem  (click)="logout()" >LogOut</a>
+          </div>
+        </li>
+          
+          </ul>
+      <!-- Right elements -->
+    </div>
+  </nav>
+  
+
+<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css /> -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <div class="panel">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col col-sm-3 col-xs-12">
+                            <h4 class="title"> <span>History</span></h4>
+                        </div>
+                        <div class="col-sm-9 col-xs-12 text-right">
+                            <div class="btn_group">
+                                <input type="text" class="form-control" placeholder="Search">
+                                <button class="btn btn-default" title="Reload"><i class="fa fa-sync-alt"></i></button>
+                                <button class="btn btn-default" title="Pdf"><i class="fa fa-file-pdf"></i></button>
+                                <button class="btn btn-default" title="Excel"><i class="fas fa-file-excel"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Full Name</th>
+                                <th>Age</th>
+                                <th>Job Title</th>
+                                <th>City</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr *ngFor="let session of session">
+                                    <td>1</td>
+                                    <th>{{ session.session_id }}</th>
+                                    <td>{{ session.diagnosis }}</td>
+                                    <td>{{ session.date }}</td>
+                                <td>
+                                    <ul class="action-list">
+                                        <li><a href="#" data-tip="edit"><i class="fa fa-edit"></i></a></li>
+                                        <li><a href="#" data-tip="delete"><i class="fa fa-trash"></i></a></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col col-sm-6 col-xs-6">showing <b>5</b> out of <b>25</b> entries</div>
+                        <div class="col-sm-6 col-xs-6">
+                            <ul class="pagination hidden-xs pull-right">
+                                <li><a href="#"><</a></li>
+                                <li class="active"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#">></a></li>
+                            </ul>
+                            <ul class="pagination visible-xs pull-right">
+                                <li><a href="#"><</a></li>
+                                <li><a href="#">></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

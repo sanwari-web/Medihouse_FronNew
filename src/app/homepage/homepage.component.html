@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<div class="container">
+<nav>
+	<div class="nav nav-tabs" id="nav-tab" role="tablist">
+	  <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true"></button>
+	</div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+	<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+		<section class="mh-100" style="background-color: #77c2f5;">
+			<div class="container py-5 h-200">
+			  <div class="row d-flex justify-content-center align-items-center h-100">
+				<div class="col col-xl-10">
+				  <div class="card" style="border-radius: 1rem;">
+					<div class="row g-0">
+					  <div class="col-md-6 col-lg-5 d-none d-md-block">
+						<img
+						  src="../assets/images/624111.jpg"
+						  class="rounded mx-auto d-block"
+						  width="400" 
+						  height="620"
+						/>
+					  </div>
+					  <div class="col-md-6 col-lg-7 d-flex align-items-center">
+						<div class="card-body p-4 p-lg-5 text-black">
+		  
+						  <form class="row g-3 needs-validation" name="form" onsubmit="return validateForm()" method="post">
+		  
+							<div class="d-flex align-items-center mb-3 pb-1">
+							  <i class="fas  fa-2x me-3" style="color: #2a89c0;"></i>
+							  <span class="h1 fw-bold mb-0">MediHouse</span>
+							</div>
+		  
+							<h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Health Care Center</h5>
+		  
+							<div class="form-outline mb-4">
+					
+		  
+							  <label class="form-label" for="email">Email </label>
+							  <div class="input-group has-validation">
+								<span class="input-group-text" id="inputGroupPrepend">@</span>
+								<input type="text"  [(ngModel)]="email" name="username" id="email" (ngModelChange)="ValidateEmail()" class="form-control form-control-lg"  aria-describedby="inputGroupPrepend" required/>
+								<br>
+							</div>
+							<span *ngIf="validateemailformat" class="text-danger"><b>Invalid email address !</b></span>
+							</div>
+		  
+							<div class="form-outline mb-4">
+								<label class="form-label" for="psw">Password</label>
+								<input [(ngModel)]="password" type="password" name="password" class="form-control form-control-lg" required (ngModelChange)="validatePassword()" />
+								
+								<div *ngIf="passwordError" class="error-message {{ getErrorMessageClass() }}">
+									<b>{{ passwordError }}</b>
+								  </div>
+							  </div>
+		  
+							<div class="pt-1 mb-4">
+							  <button  class="btn btn-dark btn-lg btn-block"  type="button" (click)="checkLogin()">Login</button>
+							</div>
+						  </form>
+		  
+						</div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			  </div>
+			</div>
+		  </section>
+		
+		
+	</div>
+
+
+
+	
+	

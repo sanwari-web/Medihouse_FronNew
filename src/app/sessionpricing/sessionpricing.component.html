@@ -1,0 +1,54 @@
+<!-- Navbar-->
+<nav class="navbar navbar-expand-lg navbar-muted ">
+  <div name="navbar" class="container-fluid ">
+    <!-- Left elements -->
+    <div class="d-flex  align-items-sm-right">
+      <!-- Brand -->
+      <a class="navbar-brand me-2 mb-1 d-flex align-self-start" routerLink="/dashboard">
+        <img
+          src="assets/images/image3.png"
+          height="40"
+          alt=""
+          loading="lazy"
+          style="margin-top: 2px;"
+        />
+      </a>
+
+    </div>
+    <!-- Left elements -->
+    <!-- Right elements -->
+    <ul class="navbar-nav flex-row">
+      <li class="nav-item me-3 me-lg-1 active">
+        <a class="nav-link" routerLink="/dashboard">
+          <span><i class="fa fa-home fa-lg"></i></span>
+          <span class="badge rounded-pill badge-notification bg-danger"></span>
+        </a>
+      </li>
+      <li class="nav-item me-3 me-lg-1">
+        <a class="nav-link d-sm-flex align-items-sm-left" href="#">
+          <img
+            src="assets/images/doctor.png"
+            class="rounded-circle"
+            height="30"
+            alt=""
+            loading="lazy"
+          />
+          <strong class="d-none d-sm-block ms-1" routerLink="/consultantprofile">Dr.John</strong>
+        </a>
+      </li>
+
+    
+      <li class="nav-item px-4" ngbDropdown display="dynamic" placement="bottom-end">
+        <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdown3" role="button">
+          <i class="fa fa-chevron-circle-down fa-lg"></i>
+        </a>
+        <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
+          <a ngbDropdownItem routerLink="/consultantprofile" (click)="$event.preventDefault()">My Profile</a>
+          <a ngbDropdownItem routerLink="/login" (click)="$event.preventDefault()">LogOut</a>
+        </div>
+      </li>
+        
+        </ul>
+    <!-- Right elements -->
+  </div>
+</nav>

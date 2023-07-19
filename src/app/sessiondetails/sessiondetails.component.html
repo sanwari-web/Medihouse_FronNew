@@ -1,0 +1,204 @@
+     <!-- Navbar-->
+<nav class="navbar navbar-expand-lg navbar-muted ">
+  <div name="navbar" class="container-fluid ">
+    <!-- Left elements -->
+    <div class="d-flex  align-items-sm-right">
+      <!-- Brand -->
+      <a class="navbar-brand me-2 mb-1 d-flex align-self-start" routerLink="/dashboard">
+        <img
+          src="assets/images/image3.png"
+          height="30"
+          alt=""
+          loading="lazy"
+          style="margin-top: 2px;"
+        />
+      </a>
+    </div>
+    <!-- Left elements -->
+    <!-- Right elements -->
+    <ul class="navbar-nav flex-row">
+      <li class="nav-item me-3 me-lg-1 active">
+        <a class="nav-link" routerLink="/dashboard">
+          <span><i class="fa fa-home fa-lg"></i></span>
+          <span class="badge rounded-pill badge-notification bg-danger"></span>
+        </a>
+      </li>
+      <li class="nav-item me-3 me-lg-1">
+        <a class="nav-link d-sm-flex align-items-sm-left">
+          <img
+            src="assets/images/doctor.png"
+            class="rounded-circle"
+            height="35"
+            alt=""
+            loading="lazy"
+          />
+        </a>
+      </li>
+
+      <li class="nav-item px-4" ngbDropdown display="dynamic" placement="bottom-end">
+        <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdown3" role="button">
+          <i class="fa fa-chevron-circle-down fa-lg"></i>
+        </a>
+        <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
+          <a ngbDropdownItem routerLink="/consultantprofile" (click)="$event.preventDefault()">My Profile</a>
+          <a ngbDropdownItem  (click)="logout()" >LogOut</a>
+        </div>
+      </li>
+        
+        </ul>
+    <!-- Right elements -->
+  </div>
+</nav>
+
+<mat-stepper #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <!-- <form >
+      <ng-template matStepLabel>Diagnosis Details</ng-template>
+      <div class="container">
+        <span><h2>Enter Diognasis Details</h2></span>
+         
+             <form id="addSessionModal" #addForm="ngForm" (ngFinish)= "onAddSession(addForm)">
+               <div class="form-group">
+                 <label for="exampleFormControlInput1">Symptoms Type<span style="color: red">*</span></label> 
+                  <select type="text" ngModel name="diagnosis" class="form-control"id="exampleFormControlSelect1">
+                   <option>Fever</option>
+                   <option>Headache</option>
+                   <option>Chest Pain</option>
+                   <option>Asathma</option>
+                   <option>Muscle or body aches</option>
+                   <option>Cough</option>
+                   <option>Diarrhea</option>
+                   <option>Sore Throat</option>
+                   <option>Other</option>
+                 </select>
+               </div>
+               <div class="form-group">
+               <label for="exampleFormControlTextarea1">Symptoms &amp; Diagnosis Details <span style="color: red">*</span></label>
+                 <textarea class="form-control"   ngModel name="reason" id="exampleFormControlTextarea1" rows="3"></textarea>
+               </div>
+               <div class="form-group">
+                 <label for="exampleFormControlTextarea1">Additional Notes</label>
+                 <textarea class="form-control" ngModel name="diagnosis_details" id="exampleFormControlTextarea1" rows="3"></textarea>
+               </div>
+               <div class="form-group">
+                 <label for="exampleFormControlTextarea1">Recommended Medicine From Clinic<span style="color: red">*</span></label>
+                 <textarea class="form-control" ngModel name="clinic_medicine" id="exampleFormControlTextarea1" rows="3"></textarea>
+               </div>
+               <div class="form-group">
+                 <label for="exampleFormControlTextarea1">Recommended Medicine From Pharmacy</label>
+                 <textarea class="form-control" ngModel name="pharmacy_medicine" id="exampleFormControlTextarea1" rows="3"></textarea>
+               </div>
+               <div class="form-group">
+                 <label for="exampleFormControlTextarea1">Please List any Operations and Dates of Each</label>
+                 <textarea class="form-control" ngModel name="medical_operations" id="exampleFormControlTextarea1" rows="3"></textarea>
+               </div>
+               <div class="form-group">
+                 <label for="exampleFormControlTextarea1">Recommended Medical Reports:</label>
+                 <textarea class="form-control" ngModel name="medical_reports" id="exampleFormControlTextarea1" rows="3"></textarea>
+               </div>
+       <label >
+          <input type="hidden" [(ngModel)]="patientdata" name="patient" class="form-control" id="patient" aria-describedby="emailHelp" placeholder="First Name">   
+          <input type="hidden" [(ngModel)]="doctor" name="user" class="form-control" id="user" aria-describedby="emailHelp" placeholder="First Name">   
+
+        </label>
+             </form>
+             <button (click)="onAddSession(addForm)"  data-dismiss="modal" class="btn btn-primary" type="button"
+             data-target="#navbarColor02" matStepperNext >
+         Next</button>
+       </div>
+      
+    </form> -->
+<form>
+  <ng-template matStepLabel>Diagnosis Details</ng-template>
+  <div class="container">
+    <span><h2>Enter Diagnosis Details</h2></span>
+     
+    <form id="addSessionModal" #addForm="ngForm" (ngFinish)="onAddSession(addForm)">
+      <div class="form-group">
+        <label for="exampleFormControlInput1" (click)="showErrorMessage = true">Symptoms Type<span style="color: red">*</span></label> 
+        <div class="error-message" [hidden]="!showErrorMessage"><span style="color: red">This field is mandatory</span></div>
+        <select type="text" ngModel name="diagnosis" class="form-control" id="exampleFormControlSelect1" required>
+          <option>Fever</option>
+          <option>Headache</option>
+          <option>Chest Pain</option>
+          <option>Asthma</option>
+          <option>Muscle or body aches</option>
+          <option>Cough</option>
+          <option>Diarrhea</option>
+          <option>Sore Throat</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Symptoms &amp; Diagnosis Details <span style="color: red">*</span></label>
+        <textarea class="form-control" ngModel name="reason" id="exampleFormControlTextarea1" rows="3" required (click)="showErrorMessage = true"></textarea>
+        <div class="error-message" [hidden]="!showErrorMessage"><span style="color: red">This field is mandatory</span></div>
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Additional Notes <span style="color: red">*</span></label>
+        <textarea class="form-control" ngModel name="diagnosis_details" id="exampleFormControlTextarea1" rows="3" (click)="showErrorMessage = true"></textarea>
+        <div class="error-message" [hidden]="!showErrorMessage"><span style="color: red">This field is mandatory</span></div>
+
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Recommended Medicine From Clinic<span style="color: red">*</span></label>
+        <textarea class="form-control" ngModel name="clinic_medicine" id="exampleFormControlTextarea1" rows="3" required (click)="showErrorMessage = true"></textarea>
+        <div class="error-message" [hidden]="!showErrorMessage"><span style="color: red">This field is mandatory</span></div>
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1"(click)="showErrorMessage = true">Recommended Medicine From Pharmacy <span style="color: red">*</span></label>
+        <textarea class="form-control" ngModel name="pharmacy_medicine" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <div class="error-message" [hidden]="!showErrorMessage"><span style="color: red">This field is mandatory</span></div>
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Please List any Operations and Dates of Each</label>
+        <textarea class="form-control" ngModel name="medical_operations" id="exampleFormControlTextarea1" rows="3"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Recommended Medical Reports:</label>
+        <textarea class="form-control" ngModel name="medical_reports" id="exampleFormControlTextarea1" rows="3"></textarea>
+      </div>
+      <label>
+        <input type="hidden" [(ngModel)]="patientdata" name="patient" class="form-control" id="patient" aria-describedby="emailHelp" placeholder="First Name">   
+        <input type="hidden" [(ngModel)]="doctor" name="user" class="form-control" id="user" aria-describedby="emailHelp" placeholder="First Name">   
+      </label>
+      <button (click)="onAddSession(addForm)" data-dismiss="modal" class="btn btn-primary" type="button" data-target="#navbarColor02" matStepperNext>
+        Next
+      </button>
+    </form>
+
+
+  <mat-step>
+    <ng-template matStepLabel>Payment Details</ng-template>
+    <div class="container">
+      <span><h2>Enter Payment Amount and Details</h2></span>
+      <form  id="addPricingModal" #addForm1="ngForm" (ngFinish)="onAddPricing(addForm1)" aria-labelledby="addPricingModalLabel">
+        <div class="form-group col-md-4">
+          <label for="consultation_fees">Doctors Channeling fee : <span style="color: red">*</span></label>
+          <br> LKR.
+          <input type="number" [(ngModel)]="consultation_fees" name="consultation_fees"  class="form-control" id="consultation_fees" >
+        </div>
+        <div class="form-group col-md-4">
+          <label for="medication_fees">Medicinal Charges : <span style="color: red">*</span></label>
+          <br> LKR.
+          <input type="number"[(ngModel)]="medication_fees" name="medication_fees"class="form-control" id="medication_fees" >
+    
+        </div>
+        <div class="form-group col-md-4">
+          <label for="total" id="total">Total Fee : LKR. {{consultation_fees + medication_fees}} 
+            <br>If there ara any aditional charges add to the below:
+            <br> LKR.
+          </label>
+          <textarea class="form-control" ngModel name="total_bill" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <label >
+          <input type="hidden" [(ngModel)]="patientdata" name="patient" class="form-control" id="patient" aria-describedby="emailHelp" placeholder="First Name">   
+          <input type="hidden" [(ngModel)]="sessiondata" name="session" class="form-control" id="session" aria-describedby="emailHelp" placeholder="First Name">   
+          <input type="hidden" [(ngModel)]="doctor" name="user" class="form-control" id="user" aria-describedby="emailHelp" placeholder="First Name">   
+        </label>
+      </form>
+         <button [disabled]="!addForm.valid" (click)="onAddPricing(addForm1)"  data-dismiss="modal" class="btn btn-primary" type="button"
+           data-target="#navbarColor02" routerLink="/dashboard">
+       Finish</button>
+      </div>
+  </mat-step>

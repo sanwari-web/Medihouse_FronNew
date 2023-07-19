@@ -1,0 +1,94 @@
+@import url();
+@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800');
+body{
+	font-family: 'Raleway', sans-serif;
+	font-size:14px;
+	color:#9a9a9a;
+}
+.fixed-top {
+
+    top: 20px;
+}
+.error {
+  color: red;
+}
+
+.te{
+	    padding-top: 115px;
+		padding-bottom:185px;
+}
+.te h1{
+	    font-size: 70px;
+    font-weight: 700;
+	    margin-bottom: 25px;
+        color: rgba(17, 4, 4, 0.89);
+}
+.te p{
+	font-size:16px;
+}
+#about-section{
+	padding-top:85px;
+	padding-bottom:110px;
+}
+.about-text h1{
+	font-size:25px;
+	font-weight:300;
+}
+.about-text p{
+	font-size:16px;
+}
+#team-section{
+	padding: 50px 0;
+
+background: #5385C1;
+color:#fff;
+}
+.team-top-header h1 {
+	font-weight: 300;
+}
+.team-member-id{
+	padding-top: 25px;
+}
+.team-member-id.text-center img {
+	width: 100px;
+	height: 100px;
+}
+.team-member-id.text-center h1 {
+	font-size: 18px;
+    font-weight: 300;
+}
+#recent-section{
+	padding:50px 0;
+}
+.recent-text h1{
+	font-weight: 300;
+
+font-size: 25px;
+}
+
+.mycontainer {
+    padding: 100px 20px 0;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  h1 {
+    margin: 0;
+    text-align: center;
+    font-size: 200px;
+    overflow: hidden;
+    line-height: 3;
+  }
+  h1 span {
+    display: block;
+    color: #070505;
+    animation: reveal 1.5s cubic-bezier(0.77, 0, 0.175, 1) 0.5s;
+  }
+  
+  @keyframes reveal {
+    0% {
+      transform: translate(0,100%);
+    }
+    100% {
+      transform: translate(0,0);
+    }
+  }

@@ -1,0 +1,581 @@
+<!-- Navbar-->
+<nav class="navbar navbar-expand-lg navbar-muted ">
+	<div name="navbar" class="container-fluid ">
+	  <!-- Left elements -->
+	  <div class="d-flex  align-items-sm-right">
+		<!-- Brand -->
+		<a class="navbar-brand me-2 mb-1 d-flex align-self-start" routerLink="/dashboard">
+		  <img
+			src="assets/images/image3.png"
+			height="40"
+			alt=""
+			loading="lazy"
+			style="margin-top: 2px;"
+		  />
+		</a>
+	  </div>
+	  <!-- Left elements -->
+	  <!-- Right elements -->
+	  <ul class="navbar-nav flex-row">
+		<li class="nav-item me-3 me-lg-1 active">
+		  <a class="nav-link" routerLink="/dashboard">
+			<span><i class="fa fa-home fa-lg"></i></span>
+			<span class="badge rounded-pill badge-notification bg-danger"></span>
+		  </a>
+		</li>
+		<li class="nav-item me-3 me-lg-1">
+		  <a class="nav-link d-sm-flex align-items-sm-left">
+			<img
+			  src="assets/images/doctor.png"
+			  class="rounded-circle"
+			  height="30"
+			  alt=""
+			  loading="lazy"
+			/>
+			<strong class="d-none d-sm-block ms-1" routerLink="/consultantprofile">Dr.{{userdata.first_name}} </strong>
+		  </a>
+		</li>  
+		<li class="nav-item px-4" ngbDropdown display="dynamic" placement="bottom-end">
+		  <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdown3" role="button">
+			<i class="fa fa-chevron-circle-down fa-lg"></i>
+		  </a>
+		  <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
+			<a ngbDropdownItem routerLink="/consultantprofile" (click)="$event.preventDefault()">My Profile</a>
+			<a ngbDropdownItem  (click)="logout()" >LogOut</a>
+		  </div>
+		</li>
+		  
+		  </ul>
+	  <!-- Right elements -->
+	</div>
+  </nav>
+  <body>
+	  <br>
+	  <br>
+	  <br>
+	  <br>
+  <!-- <ng-template #content let-modal>
+	<div class="modal-header">
+	  <h4 class="modal-title">Male & Female Patient Comparison</h4>
+	  <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+	<div class="chart-wrapper">
+    <canvas baseChart
+            [data]="pieChartData"
+            [labels]="pieChartLabels"
+            [chartType]="pieChartType"></canvas>
+</div>
+	</div>
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+	</div>
+  </ng-template> -->
+  <ng-template #content let-modal>
+	<div class="modal-header">
+	  <h4 class="modal-title">Male & Female Patient Comparison</h4>
+	  <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+	  <div class="chart-wrapper">
+		<canvas #chartCanvas baseChart
+				[data]="pieChartData"
+				[labels]="pieChartLabels"
+				[chartType]="pieChartType"></canvas>
+	  </div>
+	</div>
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-light" (click)="downloadDetailsAsPDF()">Download PDF</button>
+	  <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+	</div>
+  </ng-template>
+
+  <ng-template #content2 let-modal>
+	<div class="modal-header">
+	  <h4 class="modal-title">Patient Vs District Comparison</h4>
+	  <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+	<div class="chart-wrapper">
+	    <canvas baseChart
+                [data]="doughnutChartData"
+                [labels]="doughnutChartLabels"
+                [chartType]="doughnutChartType"></canvas>
+</div>
+	</div>
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+	</div>
+  </ng-template>
+  
+
+<ng-template #content3 let-modal>
+	<div class="modal-header">
+	  <h4 class="modal-title">Disease with Patient Comparison</h4>
+	  <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+	<div class="chart-wrapper">
+		<canvas baseChart
+		[datasets]="barChart2Data"
+		[labels]="barChart2Labels"
+		[options]="barChartOptions"
+		[legend]="barChartLegend"
+		[chartType]="barChartType">
+</canvas>
+</div>
+	</div>
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+	</div>
+  </ng-template>
+
+  <ng-template #content4 let-modal>
+	<div class="modal-header">
+	  <h4 class="modal-title">District with Disease -Fever Comparison</h4>
+	
+	  <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+	<div class="chart-wrapper">
+		<canvas baseChart
+		[datasets]="barChart4Data"
+		[labels]="barChart4Labels"
+		[options]="barChartOptions"
+		[legend]="barChartLegend"
+		[chartType]="barChartType"
+		[datasets]="barChartData">
+</canvas>
+</div>
+	</div>
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+	</div>
+  </ng-template> 
+ <ng-template #content5 let-modal>
+	<div class="modal-header">
+	  <h4 class="modal-title">District with Disease -Headache Comparison</h4>
+	
+	  <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+	<div class="chart-wrapper">
+		<canvas baseChart
+		[datasets]="barChart5Data"
+		[labels]="barChart5Labels"
+		[options]="barChartOptions"
+		[legend]="barChartLegend"
+		[chartType]="barChartType">
+</canvas>
+</div>
+	</div>
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+	</div>
+  </ng-template>
+  
+  <ng-template #content6 let-modal>
+	<div class="modal-header">
+	  <h4 class="modal-title">District with Disease - Chest Pain Comparison</h4>
+	
+	  <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+	<div class="chart-wrapper">
+		<canvas baseChart
+		[datasets]="barChart6Data"
+		[labels]="barChart6Labels"
+		[options]="barChartOptions"
+		[legend]="barChartLegend"
+		[chartType]="barChartType">
+</canvas>
+</div>
+	</div>
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+	</div>
+  </ng-template>
+  
+  <ng-template #content7 let-modal>
+	<div class="modal-header">
+	  <h4 class="modal-title">District with Disease -Asathma Comparison</h4>
+	
+	  <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+	<div class="chart-wrapper">
+		<canvas baseChart
+		[datasets]="barChart7Data"
+		[labels]="barChart7Labels"
+		[options]="barChartOptions"
+		[legend]="barChartLegend"
+		[chartType]="barChartType">
+</canvas>
+</div>
+	</div>
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+	</div>
+  </ng-template>
+  
+  <ng-template #content8 let-modal>
+	<div class="modal-header">
+	  <h4 class="modal-title">District with Disease -Muscle or body aches Comparison</h4>
+	
+	  <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+	<div class="chart-wrapper">
+		<canvas baseChart
+		[datasets]="barChart8Data"
+		[labels]="barChart8Labels"
+		[options]="barChartOptions"
+		[legend]="barChartLegend"
+		[chartType]="barChartType">
+</canvas>
+</div>
+	</div>
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+	</div>
+  </ng-template>
+  
+  <ng-template #content9 let-modal>
+	<div class="modal-header">
+	  <h4 class="modal-title">District with Disease -Cough Comparison</h4>
+	
+	  <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+	<div class="chart-wrapper">
+		<canvas baseChart
+		[datasets]="barChart9Data"
+		[labels]="barChart9Labels"
+		[options]="barChartOptions"
+		[legend]="barChartLegend"
+		[chartType]="barChartType">
+</canvas>
+</div>
+	</div>
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+	</div>
+  </ng-template>
+  
+  <ng-template #content10 let-modal>
+	<div class="modal-header">
+	  <h4 class="modal-title">District with Disease -Diarrhea Comparison</h4>
+	
+	  <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+	<div class="chart-wrapper">
+		<canvas baseChart
+		[datasets]="barChart10Data"
+		[labels]="barChart10Labels"
+		[options]="barChartOptions"
+		[legend]="barChartLegend"
+		[chartType]="barChartType">
+</canvas>
+</div>
+	</div>
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+	</div>
+  </ng-template>
+  
+  <ng-template #content11 let-modal>
+	<div class="modal-header">
+	  <h4 class="modal-title">District with Disease -Sore Throat Comparison</h4>
+	
+	  <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+	<div class="chart-wrapper">
+		<canvas baseChart
+		[datasets]="barChart11Data"
+		[labels]="barChart11Labels"
+		[options]="barChartOptions"
+		[legend]="barChartLegend"
+		[chartType]="barChartType">
+</canvas>
+</div>
+	</div>
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+	</div>
+  </ng-template>
+  
+  <ng-template #content12 let-modal>
+	<div class="modal-header">
+	  <h4 class="modal-title">District with Disease -Other Comparison</h4>
+	
+	  <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+	<div class="chart-wrapper">
+		<canvas baseChart
+		[datasets]="barChart12Data"
+		[labels]="barChart12Labels"
+		[options]="barChartOptions"
+		[legend]="barChartLegend"
+		[chartType]="barChartType">
+</canvas>
+</div>
+	</div>
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+	</div>
+  </ng-template> 
+   <ng-template #content13 let-modal>
+	<div class="modal-header">
+	  <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<div class="card" style="width: 18rem;">
+			<div class="card-body">
+			  <h2 class="card-title">Total Consultation Sessions Conducted  by :  Dr.{{userdata.first_name}}</h2>
+			  <h3 class="card-subtitle mb-2 text-muted"> Count : {{this.totalpatient}}</h3>
+			</div>
+		  </div>
+	</div>
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+	</div>
+  </ng-template> 
+  <ng-template #content14 let-modal>
+	<div class="modal-header">
+	  <h3 class="modal-title">Total Revenue for Each Doctor </h3>
+	  <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+	<div class="chart-wrapper">
+    <canvas baseChart
+            [data]="pieChart14Data"
+            [labels]="pieChart14Labels"
+            [chartType]="pieChartType"></canvas>
+			
+</div>
+	</div>
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+	</div>
+  </ng-template> 
+  <div class="parent-container d-flex">
+	 
+  <div class="container">
+	  <div class="row">
+		  <h2> View Reports</h2>
+	  </div>
+	
+	<div class="row">
+		<div class="col">
+		<div class="row">
+            <div class="col-md-12">
+    	    <div class="menu">
+    	        
+                <div class="accordion">
+                    
+                    <div class="accordion-group">
+                      
+                        <div class="accordion-heading area">
+                            <a class="accordion-toggle" data-toggle="collapse" (click)="openLg(content)">
+								<h3> View Comparison of Patient-Gender </h3>
+							</a>
+                        </div>
+                        <div class="accordion-body collapse" id="area1">
+                            <div class="accordion-inner">
+                                <div class="accordion" id="equipamento1">
+                              
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion">
+               
+                    <div class="accordion-group">
+                     
+                        <div class="accordion-heading area">
+                            <a class="accordion-toggle" data-toggle="collapse" (click)="openLg2(content2)"><h3>
+								View Comparison of Patient-District
+							</h3></a>
+                        </div>
+            
+                    </div>
+                </div>
+                
+                 <div class="accordion">
+                
+                    <div class="accordion-group">
+                   
+                        <div class="accordion-heading area">
+                            <a class="accordion-toggle" data-toggle="collapse" (click)="openLg3(content3)">
+								<h3>
+									View Comparison of Patient-Diseases
+								</h3>
+							</a>
+                        </div>
+                    </div>
+                </div>
+				<div class="accordion">
+                   
+                    <div class="accordion-group">
+                       
+                        <div class="accordion-heading area">
+                         
+                        </div>
+                    </div>
+                </div>
+				<div class="accordion">
+                   
+                    <div class="accordion-group">
+                      
+                        <div class="accordion-heading area">
+                            <a class="accordion-toggle" data-toggle="collapse" href="#area3"><h3>
+								View Comparison of Patient by Diseases & District
+							</h3></a>
+                        </div>
+            
+                        <div class="accordion-body collapse" id="area3">
+                            <div class="accordion-inner">
+                                <div class="accordion" id="equipamento1">
+            
+                                    <div class="accordion-group">
+                                                        <div class="accordion-heading equipamento">
+                                                            <a class="accordion-toggle" data-toggle="collapse" (click)="openLg4(content4)"><h4>
+																District with Disease Type (Fever) Distribution
+															</h4></a>
+                                                        </div>
+            
+                                                    </div>
+													<div class="accordion-group">
+                                                        <div class="accordion-heading equipamento">
+                                                             <a class="accordion-toggle" data-toggle="collapse" (click)="openLg5(content5)"><h4> 
+																District with Disease Type (Headache) Distribution
+															</h4></a> 
+                                                        </div>
+            
+                                                    </div>
+													<div class="accordion-group">
+                                                        <div class="accordion-heading equipamento">
+                                                            <a class="accordion-toggle" data-toggle="collapse" (click)="openLg6(content6)"><h4>
+																District with Disease Type (Chest Pain) Distribution
+															</h4></a>
+                                                        </div>
+            
+                                                    </div>
+													<div class="accordion-group">
+                                                        <div class="accordion-heading equipamento">
+                                                            <a class="accordion-toggle" data-toggle="collapse" (click)="openLg7(content7)"><h4>
+																District with Disease Type (Asathma) Distribution
+															</h4></a>
+                                                        </div>
+            
+                                                    </div>
+													<div class="accordion-group">
+                                                        <div class="accordion-heading equipamento">
+                                                            <a class="accordion-toggle" data-toggle="collapse" (click)="openLg8(content8)"><h4>
+																District with Disease Type (Muscle or body aches) Distribution
+															</h4></a>
+                                                        </div>
+            
+                                                    </div>
+													<div class="accordion-group">
+                                                        <div class="accordion-heading equipamento">
+                                                            <a class="accordion-toggle" data-toggle="collapse" (click)="openLg9(content9)"><h4>
+																District with Disease Type (Cough) Distribution
+															</h4></a>
+                                                        </div>
+            
+                                                    </div>
+													<div class="accordion-group">
+                                                        <div class="accordion-heading equipamento">
+                                                            <a class="accordion-toggle" data-toggle="collapse" (click)="openLg10(content10)"><h4>
+																District with Disease Type (Diarrhea) Distribution
+															</h4></a>
+                                                        </div>
+            
+                                                    </div>
+													<div class="accordion-group">
+                                                        <div class="accordion-heading equipamento">
+                                                            <a class="accordion-toggle" data-toggle="collapse" (click)="openLg11(content11)"><h4>
+																District with Disease Type (Sore Throat) Distribution
+															</h4></a>
+                                                        </div>
+            
+                                                    </div>
+													<div class="accordion-group">
+                                                        <div class="accordion-heading equipamento">
+                                                            <a class="accordion-toggle" data-toggle="collapse" (click)="openLg12(content12)"><h4>
+																District with Disease Type (Other) Distribution
+															</h4></a>
+                                                        </div>
+            
+                                                    </div>
+                                                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+		</div>
+	</div>
+</div>
+</div>
+</div>
+<div class="container">
+	<h2> </h2>
+	<div class="row">
+		<div class="col">
+		<div class="row">
+            <div class="col-md-12">
+    	    <div class="menu">
+    	        
+                <div class="accordion">
+                   
+                    <div class="accordion-group">
+                       
+                        <div class="accordion-heading area">
+                            <a class="accordion-toggle" data-toggle="collapse" (click)="openLg13(content13)">
+								<h3> View Comparison of Doctor with Patient Count </h3>
+							</a>
+                        </div>
+            
+                        <div class="accordion-body collapse" id="area1">
+                            <div class="accordion-inner">
+                                <div class="accordion" id="equipamento1">
+                                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion">
+                  
+                    <div class="accordion-group">
+                        
+                        <div class="accordion-heading area">
+                            <a class="accordion-toggle" data-toggle="collapse" (click)="openLg14(content14)"><h3>
+								View Comparison of Doctors Revenue
+							</h3></a>
+                        </div>
+            
+                    </div>
+                </div> 
+                
+                
+                    <div class="accordion-group">
+                        <div class="accordion-heading area">
+                        
+                        </div>
+                    </div>
+                </div>  
+            </div> 
+		</div>
+	</div>
+</div>
+</div>
